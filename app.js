@@ -30,15 +30,16 @@ app.post("/", function(request,response){
     }
 
     const userDataJson = JSON.stringify(userData);
-    const url = "https://us10.api.mailchimp.com/3.0/lists/d73560772f"; 
+    const url = "https://us10.api.mailchimp.com/3.0/lists/d73560772f";
+    
+    // API Key stored as env variable 
     const options = {
         method: "POST",
-        auth: "lalith1:qac704eb21c4f909490f945630f0c3f84-us10"
+        auth: `lalith1:${process.env.MAILCHIMP_API_KEY}`
     }
 
     let req = https.request(url, options, function(res){
         res.on("data", function(){
-            console.log(res.statusCode);
             if(res.statusCode == "200"){
                 response.sendFile(__dirname+"/success.html");
             }
@@ -60,12 +61,3 @@ app.post("/failure", function(request,response){
 app.listen(process.env.PORT || 3000, function(){
     console.log("Server is listening on port 3000.");
 })
-
-// url
-// https://us10.admin.mailchimp.com/
-
-// api key 
-// ac704eb21c4f909490f945630f0c3f84-us10
-
-// unique Id
-// d73560772f
